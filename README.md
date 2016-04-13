@@ -10,6 +10,8 @@
 
 其中模拟了两种Signal信号崩溃SIGABRT和SIGSEGV
 
+TODO: 模拟SIGBUS信号崩溃
+
 # 最后
 - 如果我的项目对你有帮助欢迎 Star  
 - 如果在使用过程中遇到BUG，希望你能Issues我
