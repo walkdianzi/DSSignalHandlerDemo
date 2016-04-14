@@ -29,23 +29,29 @@ typedef struct Test
     contentScroller.contentSize = CGSizeMake(self.view.frame.size.width, self.view.frame.size.height*1.5);
     [self.view addSubview:contentScroller];
     
-    UIButton *crashExcButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 200, 100, 100)];
+    UIButton *crashExcButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 200, 120, 100)];
     crashExcButton.backgroundColor = [UIColor redColor];
     [crashExcButton setTitle:@"Exception" forState:UIControlStateNormal];
     [crashExcButton addTarget:self action:@selector(crashExcClick) forControlEvents:UIControlEventTouchUpInside];
     [contentScroller addSubview:crashExcButton];
     
-    UIButton *crashSignalEGVButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 200, 100, 100)];
+    UIButton *crashSignalEGVButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 200, 120, 100)];
     crashSignalEGVButton.backgroundColor = [UIColor redColor];
     [crashSignalEGVButton setTitle:@"Signal(EGV)" forState:UIControlStateNormal];
     [crashSignalEGVButton addTarget:self action:@selector(crashSignalEGVClick) forControlEvents:UIControlEventTouchUpInside];
     [contentScroller addSubview:crashSignalEGVButton];
     
-    UIButton *crashSignalBRTButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 350, 100, 100)];
+    UIButton *crashSignalBRTButton = [[UIButton alloc] initWithFrame:CGRectMake(200, 350, 120, 100)];
     crashSignalBRTButton.backgroundColor = [UIColor redColor];
-    [crashSignalBRTButton setTitle:@"Signal(BRT)" forState:UIControlStateNormal];
+    [crashSignalBRTButton setTitle:@"Signal(ABRT)" forState:UIControlStateNormal];
     [crashSignalBRTButton addTarget:self action:@selector(crashSignalBRTClick) forControlEvents:UIControlEventTouchUpInside];
     [contentScroller addSubview:crashSignalBRTButton];
+    
+    UIButton *crashSignalBUSButton = [[UIButton alloc] initWithFrame:CGRectMake(50, 350, 120, 100)];
+    crashSignalBUSButton.backgroundColor = [UIColor redColor];
+    [crashSignalBUSButton setTitle:@"Signal(BUS)" forState:UIControlStateNormal];
+    [crashSignalBUSButton addTarget:self action:@selector(crashSignalBUSClick) forControlEvents:UIControlEventTouchUpInside];
+    [contentScroller addSubview:crashSignalBUSButton];
 }
 
 - (void)crashSignalEGVClick{
@@ -61,6 +67,14 @@ typedef struct Test
     Test *pTest = {1,2};
     free(pTest);//导致SIGABRT的错误，因为内存中根本就没有这个空间，哪来的free，就在栈中的对象而已
     pTest->a = 5;
+}
+
+- (void)crashSignalBUSClick{
+    
+    //SIGBUS，内存地址未对齐
+    //EXC_BAD_ACCESS(code=1,address=0x1000dba58)
+    char *s = "hello world";
+    *s = 'H';
 }
 
 - (void)crashExcClick{
