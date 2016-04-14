@@ -8,9 +8,10 @@
 
 ![](http://7xss2g.com2.z0.glb.qiniucdn.com/IMG_0459.JPG)
 
-其中模拟了两种Signal信号崩溃SIGABRT和SIGSEGV
-
-TODO: 模拟SIGBUS信号崩溃
+其中模拟了三种Signal信号崩溃
+1.SIGABRT
+2.SIGSEGV
+3.SIGBUS
 
 # 最后
 - 如果我的项目对你有帮助欢迎 Star  
